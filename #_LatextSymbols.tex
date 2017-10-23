@@ -1,0 +1,225 @@
+\documentclass{article}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm} 
+\usepackage{url}
+\usepackage{xspace}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[danish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[vlined]{algorithm2e}
+\usepackage{pgfplots}
+\usepackage{booktabs,array,rotating}
+
+\newcommand{\svec}{\ensuremath{\mathbf{s}}\xspace}
+
+\newcommand{\splitcell}[1]{%
+  \begin{tabular}{@{}l@{}}#1\end{tabular}%
+}
+
+\begin{document}
+
+\noindent
+Quatilty attribute\\
+Quatilty attribute drivers\\
+QAW og Quality attribute scenario : skalerbarhed og sikkerhed\\
+Tactics\\
+3+1 viewpoints\\
+Distributed patterns\\
+Microservices: distributed randomness\\
+Sikkerhed på en browser\\
+Toplogi: stjerner ingen snakker med hinanden\\
+Beslutning omkring valg af kodeplatform... er det arktikturmæssig beslutning... Måske decisional krutchen ??\\\\
+
+\noindent
+klient (voter)\\
+tallier\\
+oberserver (master authority)\\
+bullutin board (server)\\
+\noindent
+Initielt\\
+En klient melder sig til bullutin board. Får tildelt public værdier. \\
+En tallier melder sig til bullutin board. \\\\
+\noindent
+Ballotcasting -> Nu starter voting ->  $DLEQ$ og $PROOF_U$ -> indenfor deadline\\
+Tallying -> Optællingsfasen for hver \\
+Master authority -> Endelig summering -> brute force -> publish samlet stemme -> en vote som ikke er valideret tæller ikke med -> logning af beregning \\\\
+
+\noindent
+Issue tables\\
+Diskussion/ta stilling \\
+Remote randomness / webbrowser / .NET\\
+https\\
+man må ikke dobbelt vote\\
+store tal\\
+hardware krav
+
+
+\begin{description}
+  \item[paralist] provides compact lists and list versions
+    that can be used within paragraphs, helps to customize
+    labels and layout
+  \item[enumitem] gives control over labels and lenghts in all
+    kind of lists
+  \item[mdwlist] is useful to customize description lists,
+    it even allows multi-line labels. It features compact lists
+    and the capability to suspend and resume.
+  \item[desclist] offers more flexibility in definition list
+  \item[multenum] produces vertical enumeration in
+    multiple columns
+\end{description}
+
+
+\begin{math}
+\frac{abc}{xyz}
+ \end{math}    
+ 
+
+Figur \ref{fig:DLEQ_1}
+
+% Information vedr.  pgfplots // grafer: 
+% https://www.maths.adelaide.edu.au/anthony.roberts/LaTeX/pgfplotBasics.pdf
+
+\begin{tikzpicture}
+\begin{axis}[
+        xmin=0, xmax=4,
+        ymin=0, ymax=4,
+        axis lines=center,
+        axis on top=true,
+        domain=0:1,
+        title style={at={(0.5,-0.15)},anchor=north},
+        title={\textbf{Kaspers graf}},
+    ]
+    \addplot[
+        scatter,
+        only marks,
+        point meta=explicit symbolic,
+        scatter/classes={a={black}},
+    ]
+    table[meta=label] {
+        x       y       label
+        1       2       a
+        2       4       a
+        3       3       a
+        4       4       a
+    };
+\end{axis}
+\end{tikzpicture} 
+
+
+
+
+\begin{sidewaystable}
+\caption{The ATAM Attribute Utility Tree}
+
+\medskip
+
+\begin{tabular}{ @{} l l >{\raggedright\arraybackslash}p{9.5cm} @{} }
+\toprule
+\bfseries\splitcell{Quality \\ Attribute}
+  & \bfseries\splitcell{Attribute \\ Refinement}
+  & \bfseries Scenarios \\
+\midrule
+Reliability
+  & Fatal error recovery
+  & Mechanisms must be in place to ensure any error that occurs is handled without
+    causing the application to crash.
+\\\addlinespace
+  & Reliable Simulation
+  & Calculate physics simulation results in a reliable manner.
+\\
+\midrule
+Scalability
+  & Scale with world size and complexity
+  & Physical world size and complexity will have an impact on graphics hardware performance. 
+    The resource requirements must scale linearly with the complexity of the graphical assets 
+    on screen.
+\\\addlinespace
+  & Scale with vehicle complexity
+  & System performance will be affected by the increase in vehicle complexity. The resources 
+    requirements must scale in proportion to the complexity size.
+\\\addlinespace
+  & Scale with multiplayer size
+  & On the multiplayer server side, the amount of concurrent connections into the 
+    server is going to impact performance. Servers must have a known budget and resources 
+    requirements must be known for concurrent connection sizes.
+\\
+\midrule
+Performance
+  & Consistent performance
+  & Maintain framerate as simulation complexity grows.
+\\
+\midrule
+Maintainability
+  & Core isolation
+  & Update core physics engine without affecting other parts
+\\\addlinespace
+  & Pluggable rendering engine
+  & Different rendering engines (Direct3D, OpenGL, Mantle etc.)\ should be used 
+    depending on architecture and user requirements.
+\\
+\midrule
+Flexibility
+  & Simulation Flexibility
+  & Simulate various types of vehicles such as cars, boats and aircraft with same
+    simulation engine.
+\\\addlinespace
+  & Scriptable Interface to Simulation
+  & Read vehicle configurations and simulation parameters in from human readable files.
+\\
+\midrule
+Configurability
+  & System Settings
+  & Capacity for various translations (and possible future translations) must be
+    available in the architecture.
+\\\addlinespace
+  & Scenario Settings
+  & Adjustable scenario parameters such as weather conditions, time of day, terrain
+    conditions and various triggerable events must be accessible from the interface.
+\\
+\midrule
+Internationalisation
+  & Local Translation
+  & System settings such as audio, graphics and interface must be settable from the
+    interface and changes must be persistent.
+\\\addlinespace
+  & Unit Translations
+  & Units must be displayable in various formats such as imperial and ISO.
+\\
+\bottomrule
+\end{tabular}
+\end{sidewaystable}
+ 
+
+
+\begin{thebibliography}{9}
+
+\bibitem{levfou05}
+  Eric Levieil and Pierre-Alain Fouque,
+  \emph{An improved LPN algorithm},
+  Paris Cedex 05, France, 2005.
+  
+\bibitem{BKW03}
+  A. Blum, A. Kalai and H. Wasserman.
+  \emph{Noise-tolerant Learning, the Parity Problem, and the statistical Query Problem},
+  Journal of the ACM 50,4, July 2003, pp. 506-519.
+  
+\bibitem{BOTRVA}
+  Sonia Bogos, Florian Tramér, and Serge Vaudenay
+  \emph{On Solving LPN using BKW and Variants},
+  {IACR} Cryptology ePrint Archive, 2015.  
+  
+
+\end{thebibliography}
+ 
+\end{document}
+
+
+
+
+
+    
+
+

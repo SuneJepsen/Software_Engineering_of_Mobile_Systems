@@ -1,0 +1,44 @@
+In this Master thesis we will study the public verifiable secret sharing protocol and how it can be used in an electronic voting application based on the work from \cite{Schoenmakers1999}. Based on this knowledge we will design and implement a web based electronic voting application.\\
+
+\noindent
+Our work with this protocol leads to the following main topics which should cover our objective about Shamirs secret sharing, multiparty computation, public verifiable secret sharing protocol and our implementation of an electronic voting application.
+
+\begin{enumerate}
+    \item Voting
+    \item Mathematical understanding
+    \item Multiparty computation
+    \item Electronic voting protocol
+    \item Designing the application
+    \item The application
+    \item Reflection
+\end{enumerate}
+
+\noindent
+We start with describing the concepts of electronic voting and the challenges with the different types of electronic voting applications. We will use other studies and their demands for concrete security requirements, which we can include in our consideration for our electronic voting application.  \\
+
+\noindent
+To understand the public verifiable secret sharing protocol one need some basic mathematical understanding and some knowledge about cryptographic tools. Modular arithmetic and group theory will be key elements in understanding how the protocol works. Regarding to the cryptographic tools we will present the discrete logarithm problem which is the security primitive for this protocol.\\
+
+\noindent
+Multiparty computation is basically about allowing parties to compute some function on some private inputs, in such a way that they learn the result but not the inputs from the other parties. Secret sharing is about hiding information in a random polynomial. By using this polynomial, parties can create shares based on evaluations in the polynomial. If enough parties then collect their shares together they will be able to recover the secret.  We will present a simple secret sharing example which illustrate how a secret can be distributed and reconstructed. In addition to these properties the public verifiable secret sharing protocol gives us the ability to publicly verify the validity of the shares among the parties involved in this protocol. This means that the protocol is secure against malicious parties which try to send votes which they are not supposed to do. \\
+
+\noindent
+The part describing the electronic voting protocol is divided into two parts, a basic and a more-in-depth description of the protocol. The first part is intended to supply enough basic knowledge for a software developer to implement a simple voting application based on the protocol. The second part is intended to give a more thorough insight of the protocol, here we describe the mathematical justifications behind the protocol as well as the proofs to verify the correctness and the consistency of the protocol. \\
+
+
+\noindent
+Designing the application is about architectural strategies for our application based on the knowledge from literature of \cite{Bass} and \cite{Baerbak10}. We took the security requirements of electronic voting in general as described in \cite{Cet09} as the functional demands for our application. To extract the architectural demands, such as \textit{Interoperability}, \textit{Modifiability} and \textit{Testability}, we used Quality attribute scenarios which is a way of defining a clear architectural measurable demands. In order to illustrate the impact these demands have on the architecture we will use several documentation methods here among diagrams. The process of deriving these demands is done through an Quality attribute workshop \cite{BarbacciQualityAttribute2003}. Since we have limited time we only used the structure of the Quality attribute workshop for deriving the Quality attributes scenarios without actually holding a workshop. Furthermore the structure of the workshop helped us prioritize among a long list of demands, and helped us derive the most important scenarios which we then proceeded on implementing.\\
+
+
+\noindent
+In the application part, we will elaborate on how we have implemented the final design of the architecture on a proof-of-concept application. \\
+
+\noindent
+Lastly the reflection part, summarizes the most important reflections on our results from the theoretical and the practical parts of this thesis. 
+
+
+
+  
+
+
+ 
