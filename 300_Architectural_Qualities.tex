@@ -1,3 +1,4 @@
+% Sune
 %TODO:
 % Apply defintiions
 % Short introduction to Architecture qualities
@@ -11,7 +12,7 @@ The software architecture of a system is the set of \textbf{structures} needed t
 \end{defi}
 %**************************************Definition Software architecture End
 
-\noindent
+
 Our approach towards implementing a software architecture is based on Quality attribute (QA) and Quality attribute scenario (QAS). A quality attribute (QA) according to \cite{Bass} is as follows.
 
 %**************************************Definition Quality attribute
@@ -26,16 +27,23 @@ Our approach towards implementing a software architecture is based on Quality at
 % List relevant quality attributes
 % Why these attributes?
 % Relate to generel mobile application challenges and tactics
-\noindent
+
 From \cite{Bass} we have seven quality attributes here among modifiability, availability and performance. Furthermore \cite{Kjaergaard:2015:AQT:2737182.2737196} has added energy efficiency and and ressources adaptability.  
 
 
+We will discuss different tactics on software architecture for achieving the business goal for the electronic voting application. A tactic according to \cite{Bass} is defined as.
+
+%**************************************Definition Tactic
+\begin{defi}[\textbf{Tactic}]
+Tactic is a design decision that influences the achievement of a quality attribute response. 
+\end{defi}
+%**************************************Definition Tactic End
 
 \section{Quality Attribute Scenarios}
 % TODO:
 % Formal definition of QAS
 % Use template from Bass
-\noindent
+
 A core observation is that a QA should be measurable or testable quality. The key point is when working with QA we use them in a given context/scenario and therefor we informally call these as QAS.\\
 
 
@@ -52,7 +60,7 @@ A core observation is that a QA should be measurable or testable quality. The ke
 
 
 
-\noindent
+
 One of the core aspects of the definition of software architecture, is that software architecture is a set of structures, which we can use to reason about the system. To assist and visualize these structures, elements, relations and properties we use Module-, Component \& Connector (C\&C)- and Allocation viewpoints \cite{3+1}. 
 
 \begin{enumerate}
@@ -61,22 +69,24 @@ One of the core aspects of the definition of software architecture, is that soft
     \item Allocation viewpoint is concerned with how software entities are mapped to environmental entities. Here the focus are on the physical stuff such as computer or a network. We specify the environment in order to make the software running. 
 \end{enumerate}
 
-\noindent
+
 These viewpoint originates from $3+1$ article \cite{3+1}, where the $+1$ is the architectural requirements. These architectural requirements can be formulated through QAS.
 
+
+In the following we formulated a modifiability, a energy efficiency and a ressource adaptablity QAS for the Bikebus application. We chose to focus on modifiability because we want the application to be easily modifiable when new changes has to be made. We chose to' focus on energy efficiency because we have limited battery available on the phone. We chose to focus on resource adaptability because the app is depended on network resources.
 
 \begin{table}[H]
 \begin{center}
 \begin{tabular}{|p{0.3cm}|p{2.5cm}|p{8cm}|}
   \hline
-  \multicolumn{2}{|p{3cm}|}{\bfseries Scenario(s):} & \#  5: A developer should be able to make a change to the random number generator code under runtime and the change are made and tested within 3 hours. \\
+  \multicolumn{2}{|p{3cm}|}{\bfseries Scenario(s):} & \#  1: A developer should be able to replace sensor frameworks during runtime and apply the changes within 30 minutes. \\
   \hline
   \multicolumn{2}{|p{3cm}|}{\bfseries Relevant Quality Attributes:} & Modifiability\\
   \hline
   \multirow{6}{*}{\begin{sideways}{\bfseries Scenario Parts}\end{sideways}}
   & {\bfseries Source:} & Developer \\
   \cline{2-3}
-  & {\bfseries Stimulus:} & Needs to replace the random generator \\
+  & {\bfseries Stimulus:} & Needs to replace a sensor frameworks \\
   \cline{2-3}
   & {\bfseries Artifact} &  Code \\
   \cline{2-3}
@@ -88,6 +98,63 @@ These viewpoint originates from $3+1$ article \cite{3+1}, where the $+1$ is the 
   \hline
 \end{tabular}
 \caption{Modifiability QAS}
+\end{center}
+\end{table}
+
+
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|p{0.3cm}|p{2.5cm}|p{8cm}|}
+  \hline
+  \multicolumn{2}{|p{3cm}|}{\bfseries Scenario(s):} & \#  2: 100  events arrives periodically to the Bikebus application with high energy availability for the application to process with an energy consumption of  XX watt per event. \\
+  \hline
+  \multicolumn{2}{|p{3cm}|}{\bfseries Relevant Quality Attributes:} & Energy efficiency\\
+  \hline
+  \multirow{6}{*}{\begin{sideways}{\bfseries Scenario Parts}\end{sideways}}
+  & {\bfseries Source:} & 100 events \\
+  \cline{2-3}
+  & {\bfseries Stimulus:} & Arrives periodically \\
+  \cline{2-3}
+  & {\bfseries Artifact} &  Bikebus application \\
+  \cline{2-3}
+  & {\bfseries Environment:} &  High energy availability \\
+  \cline{2-3}
+  & {\bfseries Response:} &  Process data\\
+  \cline{2-3}
+  & {\bfseries Response Measure:} & Energy consumption of xx watt per event \\
+  \hline
+\end{tabular}
+\caption{Energi efficiency QAS}
+\end{center}
+\end{table}
+
+
+
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|p{0.3cm}|p{2.5cm}|p{8cm}|}
+  \hline
+  \multicolumn{2}{|p{3cm}|}{\bfseries Scenario(s):} & \#  3: When the network coverage disappears from the phone, the BikeBus application has fewer resources available and changes the level of service by initiating participatory sensing and degrading the average accuracy level to 80\%. \\
+  \hline
+  \multicolumn{2}{|p{3cm}|}{\bfseries Relevant Quality Attributes:} & Resource Adaptability\\
+  \hline
+  \multirow{6}{*}{\begin{sideways}{\bfseries Scenario Parts}\end{sideways}}
+  & {\bfseries Source:} & Changes in network signal \\
+  \cline{2-3}
+  & {\bfseries Stimulus:} & No network coverage  \\
+  \cline{2-3}
+  & {\bfseries Artifact} &  BikeBus \\
+  \cline{2-3}
+  & {\bfseries Environment:} &  Few resources \\
+  \cline{2-3}
+  & {\bfseries Response:} &  Change level of service to participatory sensing\\
+  \cline{2-3}
+  & {\bfseries Response Measure:} & Degraded service level with an accuracy on average of 80\%\\
+  \hline
+\end{tabular}
+\caption{Resource Adaptability QAS}
 \end{center}
 \end{table}
 
@@ -105,11 +172,20 @@ These viewpoint originates from $3+1$ article \cite{3+1}, where the $+1$ is the 
 %   - Availability: Redundancy (caching layer)
 %       - Possible solution: local caching
 
-\noindent
-We will discuss different tactics on software architecture for achieving the business goal for the electronic voting application. A tactic according to \cite{Bass} is defined as.
+\subsection{Modifiability}
 
-%**************************************Definition Tactic
-\begin{defi}[\textbf{Tactic}]
-Tactic is a design decision that influences the achievement of a quality attribute response. 
-\end{defi}
-%**************************************Definition Tactic End
+\subsection{Energy Efficiency}
+To fulfill the energy efficiency QAS the sensor replacement tactic is chosen to improve the energy consumption of  the application.
+% keywords:
+% - Use one sensor to decide if the location sensor should be used
+% - Discussion about which sensor should decide if the location sensor should be used
+%    - Activity Recognition: Might be more expensive than location itself but has high accuracy
+%    - Significant motion sensor: Very low energy consumption, but does not check for biking (assume we are biking when collecting on a bikebus)
+% - If there was a qas for accuracy this could be prototyped and tested, but if both activity rec and significant comply with the qas then there is no problem
+
+%Evt: performance test with battery historian
+
+\subsection{Resource Adaptability}
+One tactic to fulfill response measure is resource selection. There will be a selection between the activity recognition together with location and the accelerometer. 
+
+ 
