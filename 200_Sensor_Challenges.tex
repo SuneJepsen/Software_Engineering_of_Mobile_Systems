@@ -5,6 +5,7 @@
 
 
 \section{Data Collection}
+\label{sec:data_collection}
 % TODO: 
 % Apply definitions
 % Little introduction
@@ -32,7 +33,7 @@ When a geofence event has been raised some constraints must be fulfilled before 
     \item The current timestamp must be within the time window textcolor{red}{<<INSERT TIME WINDOW>>} of an enlisted bikebus
     \item The current activity must be of type "ON\_BICYCLE"
 \end{itemize}
-Once the constraints have been fulfilled the data collection begins \textcolor{red}{<<INSERT SENSING TACTIC>>} by collecting locations at the sample rate of \textcolor{red}{<<INSERT SAMPLE RATE>>}. This is fairly expensive sensor collection because the fine location sensor is used to give street-specific accuracy of the location data. This expensive sensing operation can be improved by decreasing the sample rate (\textcolor{red}{<<SPECIFY EXACTLY WHICH TACTICS THIS IS>>}) and afterwards apply some filtering techniques to smooth out the path.
+Once the constraints have been fulfilled the data collection begins \textcolor{red}{<<INSERT SENSING TACTIC>>} by collecting locations at the sample rate of \textcolor{red}{<<INSERT SAMPLE RATE>>}. This is fairly expensive sensor collection because the fine location sensor is used to give street-specific accuracy of the location data. This expensive sensing operation can be improved by decreasing the sample rate (\textcolor{red}{<<SPECIFY EXACTLY WHICH TACTICS THIS IS>>}) and afterwards apply data processing techniques to smooth out the path (section~\ref{sec:data_processing}).
 
 Along with the location data the data collection also includes Activity Recognition for assuring all collected data only is collected while biking. This eliminates the situations where stopping for a red light is accounted for in the data collection and therefore will influence the overall statistics. This combination of location and activity data will provide more accurate biking statistics. 
 The activity recognition only uses the sensors defined as "Low-power".
@@ -49,6 +50,7 @@ The use of only "Low-power sensors" makes the activity recognition relatively en
 Once the end geofence event arises the data collection can stop and the final statistics will be processed. Due to the incident of the end geofence never being triggered due to inaccurate location sensing, the program automatically stops the data collection if the current time exceeds a given time threshold \textcolor{red}{<<INSERT TIME THRESHOLD>>} defined from the suggested time duration of the current bikebus.
 
 \section{Data Processing}
+\label{sec:data_processing}
 % TODO:
 % Apply definitions
 % Little introduction
@@ -86,7 +88,7 @@ Figure \ref{fig:douglas_peucker_algorithm} illustrates how DP using perpendicula
 \end{figure}
 
 
-The idea behind sliding window is to fit locations points in a growing sliding window with a valid line segment. The window continue to grow until approximation error threshold exceeds. The algorithm initializes the first location point of a trajectory as the anchor point $p_a$ of the window. The window slides when a new location point $p_i$ is added. As long all points within the sliding window doesn't exceeds the error threshold against a line segment new points are added. If the error threshold is violated the $p_{i-1}$ is included as part of the approximated trajectory and the $p_i$ is set to be the new anchor point $p_a$. An example of the sliding window is illustrated in figure \ref{fig:sliding_window_algorithm}. First the anchor point is set to $p_0$. The window slides \{$p_0,p_1,p_2,p_3,p_4$\} until $p_4$ is processed. Because the error threshold is violated for some location point within the sliding window, $p_3$ is included as a part of the approximated trajectory. The new anchor point $p_a$ is set to $p_3$.       
+The idea behind sliding window is to fit locations points in a growing sliding window with a valid line segment. The window continue to grow until an approximation error threshold exceeds. The algorithm initializes the first location point of a trajectory as the anchor point $p_a$ of the window. The window slides when a new location point $p_i$ is added. As long all points within the sliding window doesn't exceeds the error threshold against a line segment new points are added. If the error threshold is violated the $p_{i-1}$ is included as part of the approximated trajectory and the $p_i$ is set to be the new anchor point $p_a$. An example of the sliding window is illustrated in figure \ref{fig:sliding_window_algorithm}. First the anchor point is set to $p_0$. The window slides \{$p_0,p_1,p_2,p_3,p_4$\} until $p_4$ is processed. Because the error threshold is violated for some location point within the sliding window, $p_3$ is included as a part of the approximated trajectory. The new anchor point $p_a$ is set to $p_3$.       
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.6]{SlidingWindow.JPG}
@@ -96,7 +98,7 @@ The idea behind sliding window is to fit locations points in a growing sliding w
 \end{figure}
 
 
-An alternative to sliding window is the open window algorithm. It is similar to the sliding window excepts when the error threshold is violated. The algorithm chooses the location point with the largest error distance as a part of the approximate trajectory whereas the sliding window included $p_{i-1}$ location point. This algorithm result in more accuracy compared to sliding window. 
+An alternative to the sliding window is the open window algorithm. It is similar to the sliding window except when the error threshold is violated. The algorithm chooses the location point with the largest error distance as a part of the approximate trajectory whereas the sliding window included $p_{i-1}$ location point. This algorithm result in more accuracy compared to sliding window. 
 
 \begin{figure}[H]
 \centering
@@ -106,8 +108,9 @@ An alternative to sliding window is the open window algorithm. It is similar to 
 \label{fig:open_window_algorithm}
 \end{figure}
 
-These compressions algorithms suffers under location points which are potentially outliers. The compression isn't able to distinguish between "good" and "bad" points. One way to handle this is by applying a median filter. 
+These compressions algorithms suffers under location points which are potentially outliers. The compression isn't able to distinguish between "good" and "bad" points. One way to handle this is by applying a median filter. The idea is to compute the median through a range of location points, e.g. with a 10 points interval and a stepsize of 1. This process continues until all points have been visited. Within each interval the median is calculated and saved as the new approximated trajectory.
 
+By applying compression and filters on the location point will off cause impact the phones processing power. But with the increasing development in mobile technologies hereby larger processors and batteries etc. there also capabilities for doing more computations. By doing compression and filters is a matter of raw computation without involving expensive sensors etc.       
 \iffalse
 Suggestions for further processing:
 \begin{itemize}

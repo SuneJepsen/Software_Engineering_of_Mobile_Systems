@@ -2,7 +2,7 @@
 %TODO:
 % Apply defintiions
 % Short introduction to Architecture qualities
-As software engineers our focus is on creating a software architecture based on the architectural requirements. Software architecture allows us to reasons and take qualified decision. It is essential that we early in the project    \cite{un}
+As software engineers our focus is on creating a software architecture based on the architectural requirements. Software architecture allows us to reasons and take qualified decision. When designing Bikebus it is essential that we early in the project consider the architecture for the demands of the application. For this we will use known software principles to state measureable architectural demands. 
 
 \section{Quality Attributes}
 We will follow the definition on software architecture from \cite{Bass}. 
@@ -28,10 +28,10 @@ Our approach towards implementing a software architecture is based on Quality at
 % Why these attributes?
 % Relate to generel mobile application challenges and tactics
 
-From \cite{Bass} we have seven quality attributes here among modifiability, availability and performance. Furthermore \cite{Kjaergaard:2015:AQT:2737182.2737196} has added energy efficiency and and ressources adaptability.  
+From \cite{Bass} we have seven quality attributes here among modifiability, availability and performance. Furthermore \cite{Kjaergaard:2015:AQT:2737182.2737196} has added energy efficiency and ressources adaptability.  
 
 
-We will discuss different tactics on software architecture for achieving the business goal for the electronic voting application. A tactic according to \cite{Bass} is defined as.
+We will discuss different tactics on software architecture for achieving the requirements for the Bikebus application. A tactic according to \cite{Bass} is defined as.
 
 %**************************************Definition Tactic
 \begin{defi}[\textbf{Tactic}]
@@ -61,19 +61,21 @@ A core observation is that a QA should be measurable or testable quality. The ke
 
 
 
-One of the core aspects of the definition of software architecture, is that software architecture is a set of structures, which we can use to reason about the system. To assist and visualize these structures, elements, relations and properties we use Module-, Component \& Connector (C\&C)- and Allocation viewpoints \cite{3+1}. 
-
-\begin{enumerate}
-    \item Module viewpoint is concerned with how functionality of the system maps to static development units. The focus will be on elements such as classes and interfaces and relationships such as associations, generalizations, realizations and dependencies.
-    \item Component \& Connector viewpoint is concerned with the runtime mapping of functionality to components of the architecture. Components are the executing things that perform a function. Connectors are the communication channels between components. The purpose is to focus on the flow of data and responsibilities such as a network call or method call etc.
-    \item Allocation viewpoint is concerned with how software entities are mapped to environmental entities. Here the focus are on the physical stuff such as computer or a network. We specify the environment in order to make the software running. 
-\end{enumerate}
+One of the core aspects of the definition of software architecture, is that software architecture is a set of structures, which we can use to reason about the system. To assist and visualize these structures, elements, relations and properties we use Module-, Component \& Connector (C\&C)- and Allocation viewpoints. These viewpoint originates from $3+1$ article \cite{3+1}, where the $+1$ is the architectural requirements. These architectural requirements can be formulated through QAS.
 
 
-These viewpoint originates from $3+1$ article \cite{3+1}, where the $+1$ is the architectural requirements. These architectural requirements can be formulated through QAS.
+In the following we formulated a modifiability, a energy efficiency and a ressource adaptablity QAS for the Bikebus application. We chose to focus on modifiability because we want Bikebus to be easily modifiable when new changes has to be made. We chose to focus on energy efficiency because we have limited battery available on the phone and resource adaptability because the Bikebus is depended on network resources.
 
+According to \cite{Bass} modifiability is defined as follows from definition \ref{def:modifiability}. It means more formel that we need to somehow quantify how well Bikebus adapts to changes.
 
-In the following we formulated a modifiability, a energy efficiency and a ressource adaptablity QAS for the Bikebus application. We chose to focus on modifiability because we want the application to be easily modifiable when new changes has to be made. We chose to' focus on energy efficiency because we have limited battery available on the phone. We chose to focus on resource adaptability because the app is depended on network resources.
+%**************************************Definition modifiability
+\begin{defi}[\textbf{Modifiability}]
+..Concerned with the ease with which the system supports change..  
+  \label{def:modifiability}
+\end{defi}
+%**************************************Definition modifiability End
+
+ For now Bikebus relies on Google API framework for retrieving locations. To be able to adapt, with all the different sensor frameworks available, an QAS (table \ref{table:modifiability_qas}) is formulated for this demand. 
 
 \begin{table}[H]
 \begin{center}
@@ -92,16 +94,28 @@ In the following we formulated a modifiability, a energy efficiency and a ressou
   \cline{2-3}
   & {\bfseries Environment:} &  Design time \\
   \cline{2-3}
-  & {\bfseries Response:} &  Replacement made and Unit tested\\
+  & {\bfseries Response:} &  Replacement made\\
   \cline{2-3}
-  & {\bfseries Response Measure:} & In three hours\\
+  & {\bfseries Response Measure:} & In 30 minutes\\
   \hline
 \end{tabular}
 \caption{Modifiability QAS}
+\label{table:modifiability_qas}
 \end{center}
+  
 \end{table}
 
+\cite{Kjaergaard:2015:AQT:2737182.2737196} defines energy efficiency as follows from figure \ref{def:energy_efficiency}. Energy efficiency is vital to take into consideration when developing mobile application since there are rarely turned off.  
 
+%**************************************Definition Energy efficiency
+\begin{defi}[\textbf{Energy efficiency}]
+Energy efficiency the "amount" of energy required to provide and/or deliver a (mobile)
+service at a given quality of service (QoS).  
+  \label{def:energy_efficiency}
+\end{defi}
+%**************************************Definition Energy efficiency End
+
+From the literature \cite{Kjaergaard2010} it is known that sensors such as GPS is an energy consumer. Since Bikebus is tightly connected to locations through the GPS, the application needs to be energy efficient such that the application doesent drains a fully loaded battery. The QAS in table \ref{table:energi_efficiency_qas} is about energy consumption per event. We are aware of other scenarios which a production application also needs to take into account such as low battery.
 
 \begin{table}[H]
 \begin{center}
@@ -126,11 +140,20 @@ In the following we formulated a modifiability, a energy efficiency and a ressou
   \hline
 \end{tabular}
 \caption{Energi efficiency QAS}
+\label{table:energi_efficiency_qas}
 \end{center}
 \end{table}
 
+According to \cite{Kjaergaard:2015:AQT:2737182.2737196} resource adaptability is defined as follows from definition \ref{def:resource_adaptability}. It means more formal that we need to somehow quantify how well Bikebus adapts to changes in the environment. Often the phone is in motion, so we cant be sure of having good network coverage all the time. Since Bikebus is depended on GPS signal over the network when biking, the application needs to be able to handle no network coverage. In other words Bikebus needs to react on this change which effects the quality of service.    
 
+%**************************************Definition Energy efficiency
+\begin{defi}[\textbf{Resource adaptability}]
+Resource adaptability is the ability of services to flexibly adapt to changing environments given by fluctuating availability of sensing and communication resources with different QoS levels, context-dependent quality of sensing data, and fluctuating wireless communication options and network availability/accessibility.  
+  \label{def:resource_adaptability}
+\end{defi}
+%**************************************Definition Energy efficiency End
 
+The way Bikebus handles the change in environment is by switching from opportunistic to participatory sensing, which is formulated in table  \ref{table:resource_adaptability_qas}. The idea is if the location services isnt available, then the user himself must turn on when the route starts and ends. This isnt an optimal solution but it is reasonable solution. The accuracy will not be the same and the data collection will also lack, but the application will still be able to calculate basic statistics.    
 
 \begin{table}[H]
 \begin{center}
@@ -138,7 +161,7 @@ In the following we formulated a modifiability, a energy efficiency and a ressou
   \hline
   \multicolumn{2}{|p{3cm}|}{\bfseries Scenario(s):} & \#  3: When the network coverage disappears from the phone, the BikeBus application has fewer resources available and changes the level of service by initiating participatory sensing and degrading the average accuracy level to 80\%. \\
   \hline
-  \multicolumn{2}{|p{3cm}|}{\bfseries Relevant Quality Attributes:} & Resource Adaptability\\
+  \multicolumn{2}{|p{3cm}|}{\bfseries Relevant Quality Attributes:} & Resource adaptability\\
   \hline
   \multirow{6}{*}{\begin{sideways}{\bfseries Scenario Parts}\end{sideways}}
   & {\bfseries Source:} & Changes in network signal \\
@@ -155,6 +178,7 @@ In the following we formulated a modifiability, a energy efficiency and a ressou
   \hline
 \end{tabular}
 \caption{Resource Adaptability QAS}
+\label{table:resource_adaptability_qas}
 \end{center}
 \end{table}
 
@@ -173,7 +197,7 @@ In the following we formulated a modifiability, a energy efficiency and a ressou
 %       - Possible solution: local caching
 
 \subsection{Modifiability}
-
+ \label{subsec:modifiability}
 \subsection{Energy Efficiency}
 To fulfill the energy efficiency QAS the sensor replacement tactic is chosen to improve the energy consumption of  the application.
 % keywords:
