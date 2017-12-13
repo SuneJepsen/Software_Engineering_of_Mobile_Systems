@@ -36,6 +36,7 @@ We will discuss different tactics on software architecture for achieving the req
 %**************************************Definition Tactic
 \begin{defi}[\textbf{Tactic}]
 Tactic is a design decision that influences the achievement of a quality attribute response. 
+\label{def:tactic}
 \end{defi}
 %**************************************Definition Tactic End
 
@@ -195,11 +196,24 @@ The way Bikebus handles the change in environment is by switching from opportuni
 %         and storage
 %   - Availability: Redundancy (caching layer)
 %       - Possible solution: local caching
+This section is about tactics which satisfies the response measure in the QAS. As stated in definition \ref{def:tactic} - a tactic is a design decision that influences the achievement of a quality attribute response. For each tactic there will be a description and an argument of the choosen tactic. 
 
 \subsection{Modifiability}
- \label{subsec:modifiability}
+\label{subsec:modifiability}
+ Modifiability is concerned with the ease with which the system supports change. By programming to an interface around the sensor implementations, we have used the tactic \textit{Encapsulate} \cite{Bass} and efficiently encapsulated this functionality and made the system ready to change to other sensor frameworks. There are implementations of activity regocnition, location and geofence which needs to be encapsulated behind interfaces. The process which identify the need for implementing interfaces is as follows \cite{Baerbak10}: 
+
+\begin{enumerate}
+    \item Identify the behavior that varies. 
+
+    \item Use interface which encapsulate the variable behavior.     
+    
+    \item Delegate the responsibility to a specialized classes.
+\end{enumerate}
+ 
+ 
+ 
 \subsection{Energy Efficiency}
-To fulfill the energy efficiency QAS the sensor replacement tactic is chosen to improve the energy consumption of  the application.
+To fulfill the energy efficiency QAS the sensor replacement tactic is chosen to improve the energy consumption of the application. The idea is a least costly sensor triggers another more energy consuming sensor. To achieve sensor replacement the activity recognition is first triggered and if it returns biking, location api is activated. From the literature \cite{Kjaergaard2010} it is a known fact the activating the GPS/radio consumes a certain amount of power. This implementation is arguable in different contexts. Sensor replacement could potentially cause unnecessary energy consumption. Since it is a biking application why bother for recognizing the biking activity. By doing activity recognition also gives better accuracy, since biking also involves holding for red lights etc. 
 % keywords:
 % - Use one sensor to decide if the location sensor should be used
 % - Discussion about which sensor should decide if the location sensor should be used

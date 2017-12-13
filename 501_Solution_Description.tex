@@ -67,7 +67,11 @@ To get a better overview, both of the following maps are rotated. The DP compres
 \end{minipage}
 \end{figure}
 
-Since the core engine of Bikebus is build on a flexible architecture, it should be manageable to plug these algorithms into Bikebus. When pluggin compression algorithm into Bikebus more testing has to be done on how it affects the energy consumption. 
+Since the core engine of Bikebus is build on a flexible architecture, it should be manageable to plug these algorithms into Bikebus. When pluggin compression algorithm into Bikebus more testing has to be done on how it affects the energy consumption.
+
+Figure \ref{lst:sliding_window_code} is an implementation of the sliding window. Basically it follows the steps described in figure \ref{fig:sliding_window_algorithm}. To achieve the open window algorithm one only needs to change the point added to the approximated trajectory and the new anchor point. As described in figure \ref{fig:open_window_algorithm} the open window chooses the point with largest distance when the threshold is violated.      
+
+\lstinputlisting[label={lst:sliding_window_code}, caption={Sliding window}, language={Python}]{Graphics/Images/SlidingWindow3.py}
 
 \section{Module viewpoint of the distance calculation}
 By encapsulated the distance calculation, the system is robust to changes. The first implementation was the simple distance calculator which consist of a primitive euclidean distances calculation. Later when the Google API was integrated the Google distance matrix was implemented. By using a strategy pattern \cite{Baerbak10} it was easy to implement the new calculator without breaking existing functionality. 
