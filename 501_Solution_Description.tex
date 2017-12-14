@@ -93,3 +93,68 @@ Notice that every class is encapsulated behind an interface. This also holds tru
 \caption{Module viewpoint of sensorData and location package}
 \label{fig:activity_regonition_module_viewpoint}
 \end{figure}
+
+
+\section{Data Layer implementation}
+
+As mentioned in section \ref{sec:data_layer_design} data retrieval is implemented via FireBaseDbHelper" class which then implements the "IStorage" interface using the two listeners "OnGetRoutesListener" and "OnGetUserLisener".
+
+In order to be able to write to the database, it is necessary to retrieve an instance of the location that it is desired to write to, as seen in listing \ref{code:reference_firebase_db}. 
+
+
+
+\begin{lstlisting}[frame=single, language=Java, label={code:reference_firebase_db}, caption={Reference an instance of user and routes in the database }]
+// Instance to the root of the database
+private DatabaseReference mDatabase = mDatabase = FirebaseDatabase.getInstance().getReference();
+// Instance to "routes" in the database
+private DatabaseReference routesCloudEndpoint = routesCloudEndpoint = mDatabase.child("routes");
+// Instance to "users" in the database
+private DatabaseReference usersCloudEndpoint = usersCloudEndpoint = mDatabase.child("users");
+\end{lstlisting}
+
+
+
+\begin{lstlisting}[frame=single, language=Java, label={code:write_to_firebase_db}, caption={Write to database}]
+@Override
+    public String saveUser(User user) {
+        if (false) {
+            usersCloudEndpoint.child(user.getId()).setValue(user);
+        } else {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put(user.getId(), user);
+            usersCloudEndpoint.updateChildren(map);
+        }
+        return user.getId();
+}
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single, language=Java, label={code:read_from_firebase_db}, caption={Read from database}]
+usersCloudEndpoint.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<User> users = new ArrayList<User>();
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    User user = (User)userSnapshot.getValue(User.class);
+                    if (user.getEmail().equals(email)) {
+                        users.add(user);
+                        break;
+                    }
+                }
+                listener.onSuccess(users);
+}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single, language=Java, label={code:OnGetUserListener}, caption={Read from database}]
+public interface OnGetUsersListener {
+    void onStart();
+    void onSuccess(List<User> users);
+    void onFailed(String errorMessage);
+}
+\end{lstlisting}
+
+
+
+
+
+
