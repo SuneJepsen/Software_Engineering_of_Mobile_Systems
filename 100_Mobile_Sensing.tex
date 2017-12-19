@@ -6,7 +6,7 @@
 This chapter explores the concepts of mobile sensing. Different phenomena such as participatory and opportunistic sensing is explained and related to the product, BikeBus. Types of application types and context awareness is also touched upon.
 
 %--------------------------------------- Begin: Types of mobile sensing ----------------------------------------------
-\section{Types of mobile sensing}  
+\subsection{Types of mobile sensing}  
 \label{section:Mobile_Sensing_Types_of_mobile_sensing}
 % TODO: 
 % Apply definitions
@@ -14,17 +14,17 @@ This chapter explores the concepts of mobile sensing. Different phenomena such a
 % Relate to articles.
 % Relate to app (start geofence -> continuous sensing -> end geofence)
 % Reflect and discuss. 
-Mobile sensing is the act of using mobile devices and an cluster of embedded sensors to sense and collect data. The data can then be used for learning both physical and social phenomenon. The information can be used to inform, share and persuade humans to an improvement, either physically or otherwise \textcolor{red}{[REF]}. 
+Mobile sensing is the act of using mobile devices and an cluster of embedded sensors to sense and collect data. The data can then be used for learning both physical and social phenomenon. The information can be used to inform, share and persuade humans to an improvement, either physically or otherwise \cite{Kjaergaard:2015:AQT:2737182.2737196}. 
 
 
-Sensing consists of two types, participatory sensing and opportunistic sensing. Participatory sensing involves the user. The user is throughout the sensing loop actively engaged in the sensing, with control over determining how, when, what and where to sample sensor data. Opportunistic sensing on the other hand runs as a continuous background activity where the user is passively participating in the sensing loop \textcolor{red}{[REF]}.
+Sensing consists of two types, participatory sensing and opportunistic sensing. Participatory sensing involves the user. The user is throughout the sensing loop actively engaged in the sensing, with control over determining how, when, what and where to sample sensor data. Opportunistic sensing on the other hand runs as a continuous background activity where the user is passively participating in the sensing loop \cite{Lane:2010:SMP:1866991.1867010}.
 
 \begin{defi}[\textbf{Participatory Sensing}]
 Participatory  Sensing  emphasizes  the  involvement  of  citizens  and  community  groups  in  the 
 process  of  sensing  and  documenting  life  where  they  live,  work,  and  play. \cite{Goldman2009}. 
 \end{defi}
 
-BikeBus makes use of opportunistic sensing which is for example observable with the location tracking\textcolor{red}{[REF to Location Tracking section]} and activity recognition\textcolor{red}{[REF to Activity Recognition section]} functionality. The sampling happens continuously in the background while the user is biking a route, and ends at the end of the route or at a greater diversions \textcolor{orange}{[Do we have this functionality?]} from the route. 
+BikeBus makes use of opportunistic sensing which is for example observable with the location tracking and activity recognition functionality which is explained in section \ref{section:Activity_recognition_and_location}. The sampling happens continuously in the background while the user is biking a route, and ends at the end of the route.
 
 
 
@@ -36,7 +36,7 @@ Opportunistic sensing shifts the burden of supporting an application from the cu
 
 
 %--------------------------------------- Begin: Application Types -------------------------------------------
-\section{Application Types}
+\subsection{Application Types}
 \label{section:Mobile_Sensing_Application_Types}
 % TODO: 
 % Apply definitions
@@ -52,12 +52,14 @@ Opportunistic sensing shifts the burden of supporting an application from the cu
 
 Sensing can be applied to different types of applications. These application sensing types consist of, individual activity sensing, group activity sensing and community activity sensing. Individual sensing is down on a personal level, where the application is designed for an individual alone and often revolves around providing the user with information through collecting and analyzing data. Group activity sensing is when a group of people go together to achieve a common goal. Community activity sensing revolves around bringing the community together for a much bigger goal \cite{Lane:2010:SMP:1866991.1867010}.
 
-BikeBus is currently an individual activity sensing application, as the data that gets collected and processed is only beneficial to the user using the application. However group and community sensing application is possible. Group activity sensing could be in form of to evaluate what the average speed is for all participants on a recurring route and thus being able to adjust at what speeds the group should bike at. Community activity sensing could be implemented to provide the municipality with data about where most people that use BikeBus usually bike at, and thus enabling municipality to focus on maintaining the biking routes where it is most busy. However the last option would require a great deal of participants in order for it to be useful. 
+BikeBus is currently an individual activity sensing application, as the data that gets collected and processed is only beneficial to the user using the application. How group and community sensing could be used is explained in section \ref{section:Closing_the_sensing_loop}.
+
+% However group and community sensing application is possible. Group activity sensing could be in form of to evaluate what the average speed is for all participants on a recurring route and thus being able to adjust at what speeds the group should bike at. Community activity sensing could be implemented to provide the municipality with data about where most people that use BikeBus usually bike at, and thus enabling municipality to focus on maintaining the biking routes where it is most busy. However the last option would require a great deal of participants in order for it to be useful. 
 %--------------------------------------- End: Application Types --------------------------------------------
 
     
 %--------------------------------------- Begin: Context Awareness --------------------------------------------
-\section{Context Awareness}
+\subsection{Context Awareness}
 \label{section:Mobile_Sensing_Context_Awareness}
 
 % TODO:
@@ -70,5 +72,5 @@ BikeBus is currently an individual activity sensing application, as the data tha
 % Reflect and discuss. Can context awareness be used in other ways in our app?
 
 % Relate to activity recognition (uses accelerometer
-Context-aware applications are capable of classification in which context the user is currently in \cite{Kjaergaard:2007:TRL:1777235.1777247}. This could range from detecting voices and the level of sound to classify whether the user is in a social context. On a more advanced level machine learning could be involved with accelerometer and gyroscope data to predict what kind of activity the user is performing. BikeBus makes use of activity recognition which is explained in detail in chapter \ref{sec:data_collection}.
+Context-aware applications are capable of classification in which context the user is currently in \cite{context-aware}. This could range from detecting voices and the level of sound to classify whether the user is in a social context. On a more advanced level machine learning could be involved with accelerometer and gyroscope data to predict what kind of activity the user is performing. BikeBus makes use of activity recognition which is explained in detail in chapter \ref{sec:data_collection}.
 %--------------------------------------- End: Context Awareness --------------------------------------------

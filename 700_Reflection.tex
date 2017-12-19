@@ -1,4 +1,38 @@
-%(All)
+%(Anna)
 
 % TODO:
 % Overall evaulation and discussion
+
+% - Discuss quality attributes and tactics results
+
+% - Challenges: 
+%   - Power consumption: hard to do, hard to get reliable results
+%   - Domain knowledge (android, sensing) - time consuming - hard to focus on essentials (trade-off)
+%   - To get from individual to group -> more challenges than realised
+
+% - Priorities (time/functionality/quality)
+% - Process
+%   - Analyse (architecture & design patterns, architectural requirements, Flow and screenshots, quality attributes, pipelines (time line)
+%   - Investigated new features and best-practices (time-consuming - new research)
+%   - Implementation (issue list - structural approach - github (deadlines))
+%      - Architectural discussions -> delegated implementation
+%   - Review (discussion, code review, rapport review)
+
+% Current state (look at conclusion)
+
+\subsection{Development Process and Priorities}
+
+The main focus in this project has been to develop a popular long-term application. To make an application popular we have analyzed existing successful apps to find the common success factor. Our findings lead to that the application must be able to release new or improved features on a regular basis, and to do that on the run, the application must be easily modifiable and extendable. This can be achieved by building a modifiable architecture. Therefore the development process started out by discussing the architecture setup and useful design patterns in regard to the analyzed functional requirements. Another successful observation is to emphasize usability in the application and keep it simple. This was discussed early in the process by limiting the number of views through flow diagrams and only focusing on the core functionalities as searching and creating bike buses. As a result of focusing on modifiability, the quality attributes were also discussed early on in the process to establish a scope of the application.
+
+When implementing new features the planning tool in GitHub was used to create issues with deadlines to be assigned to a group member. This approach was very helpful to always keep an overview of the project, while still implementing individually. In the project there has been implemented a lot of API's, mainly for getting access to complex functionalities in a simple way. To integrate this approach in the architecture, we decided to encapsulate each of the technology specific API's by creating functionality specific interfaces and listeners. In this way the requirement of modifiability is maintained by making it easy to replace or extend the different technologies in a reliable way. We have prioritized to implement API's using "best-practice" methods to contribute to the application's "long-term" focus, even though it could result in extra time consuming. We have also prioritized to investigate multiple algorithms from research papers to explore different options on data processing. To maintain high code quality, code reviews were prioritized along with planning and sparring once a week.
+
+\subsection{The Solution}
+The current state of BikeBus is a working sensing mobile application. Basic feature such as create, search and assign to routes are implemented. BikeBus comes with graphical constraint layout interface for all features implemented. Geofence, activity recognition and location are implemented as the core sensing part for collecting data through Google API. Distances in the search is implemented through Google distance matrix API. Autocomplete functionality in the search is implemented with Google API. Login functionality is integrated to a Google account. Google Firebase is implemented as data storage. Additional code work has been done with different compression algorithms such as Douglas Peucker and sliding window. There has also been ongoing work on the testability of the code.    
+
+\subsection{Challenges}
+
+During the development process one of the most time consuming challenges has been to make the correct decisions based on the domain knowledge on mobile systems and Android development. When developing at the same time as learning the domain knowledge, it might be hard to make the correct decisions. Therefore a lot of time is spend on reevaluating existing decisions based on new domain knowledge. This made it hard to focus on the essential development which limited the number of implemented features, but instead the reevaluated features have been carefully considered.
+
+Another common challenges in mobile development is the profiling of the power consumption. To get measures of the actual power consumption, testing must be done on devices, even though reliable measures are really hard to collect. This is because it is difficult to isolate a given application on the phone along with having a static amount of resources. In our project the profiling was done through "Battery Historian" provided by Google, which gave relatively different results for each time profiled. To solve this issue, a great amount of measurements must be collected and analyzed according to mean and median.
+
+Based on functional requirements the group feature would require surprisingly more complex implementation and restructuring than considered. The group feature is a core functionality when considering the problem statement of increasing safety for children using bike busses. This is because a closed group can be created for the school to ensure group bike busses only have students as "drivers". Therefore due to time limit this important feature was downsized to focus more on the project report. 

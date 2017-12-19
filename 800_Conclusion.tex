@@ -1,5 +1,66 @@
-% Conclusion (All)
-% Future Work (Admir)
+% Conclusion (Sune)
 
 % TODO:
 % Conclusion, Perspective, Future Work
+
+% Problem
+% - Increase safety for kids
+% - Coordination of bikebus
+%    - App
+% - Mobile sensing
+% - From schools perspective younger and older kids together
+%    - group implementation
+
+% - Usability for kids using the app!
+%   - community sharing if many uses
+% - Social aspects
+% - Modifiability -> new features added quickly with high reliability -> app is more attractive -> more users -> more useful information (for community)
+
+% - Current State (qualities)
+%   - Mobile Sensing 
+%   - Create, apply, search, profile functionalities
+%   - Google APIs -> attractiveness -> modifiability of technologies
+%   - Focus on good Architecture! (interfaces, listeners, best-practices, design patterns)
+%      - Ensure quality
+%   - Compression
+In this project, we presented a BikeBus mobile sensing application to address how mobile sensing and coordination can be used between kids biking. Basic functionality for coordination such as create, search and assigning routes is achieved, allowing kids to bike together. BikeBus should be a user friendly and an intuitive application for kids and therefore time was invested in working with flow and the graphics in the initial phase. Different sensors is discussed, explored and implemented to pull accurate location data. BikeBus uses standard implementation of Google API's for location data, activity recognition and geofence.
+
+Working with location based system, challenges such as data privacy and data gathering needs to be addressed. When transferring from individual sensing to a community based sensing, different data privacy techniques should be considered. Several techniques for compressing sensing data has been presented and applied. Initial findings shows that the median filter should be applied before running off-line algorithms. Both off-line and on-line results in compression savings of 50\% (on-line) and 96\% (off-line).
+
+Different techniques for architecting mobile application has been applied, for achieving measurable demands and high quality of code. QAS has been defined for both energy and resource adaptability which addresses fundamental challenges regards to mobile applications. The proposed tactics has been identified for each of the QAS. The energy consumption has been monitored and the test shows that BikeBus holds the response measure. Modifiability has been prioritized in much of the code work applied to BikeBus. One off the core aspect for this application is being able to change the sensor framework with another. The work with resource adaptability illustrates that there is always trade off which has to be considered. In this example its about accuracy and availability.    
+
+
+By applying known software design principles such as coding to interfaces, low coupling and high cohesion, results in a modifiable architecture. BikeBus should be attractive and new as old users should keep using the application. One way for achieving that is by continuing being able to add new features to the application in a reliable way.   
+
+\subsection{Future Work}
+By having a flexible architecture allows us to easily extend to group functionality, hereby being able to create private and public groups. This also implicates applying the presented privacy techniques. 
+
+Parent notification is another feature which allows the parents to be notified when their children has arrived to their end destination. Visualizing real-time maps would allow participants to get a more precise knowledge about the other participants before starting the bike route.     
+
+A lot of work has been put into experimenting with the compression algorithms. But more work on tuning and testing the implemented algorithms would be recommended.
+
+The proposed QAS and corresponding tactics needs more investigation. Even though there is literature on these subjects, describing the challenges it is time consuming to apply. There is always trade off involved, regarding to performance versus accuracy.  This is also holds true for the presented compression techniques.
+
+Further work should also consider to prioritize test coverage of the codebase. The fundamental for testability ought to be in place, since the codebase is build upon compositional design patterns.  
+
+% Group (school group -> safety) - solve part of problem formulation
+% Parent notification when arrival - solve part of problem formulation
+% Visual aspects (Google Maps + evt real-time map when meeting) - provide more usability -> good app
+% More work on energy results - increase quality
+% More work on resource adaptability - increase quality
+
+\subsection{Perspective}
+Mobile applications which have had a lot of success as a long-term popular application have typically released new features frequently. An example of that the social application Snapchat, which started out as a basic picture sharing app, but today has integrated facial recognition features just for fun. These new complex features are in our opinion the main reason the app was not short lived as the Pokemon Go app. It should be quick to integrate new features to the existing app.
+
+Another view point is mobile application which are popular because of their simplicity and enhanced user experience. Applications as MobilePay and Uber are both known for being so easily manageable, that anyone can use the app right after installation. The application should not provide the user with too many choices, it should lead the way, by for instance also limit the number of views to perform a function. 
+Furthermore Uber has a real-time map showing the drivers position until pick-up. This feature is enhances the user experience by giving the user an overview instead of being dependent on the application only. 
+
+As referenced to in the introduction the CykelScore application also has the purpose of motivating people (and especially children) to bike more often. Our application has the same purpose, but focuses more on usability and modifiability to keep users interested instead of gamification.
+
+% Good App:
+% - Outlook to other apps (snapchat, uber, gomore)
+%   - Analyse why they are still popular
+%   - New features (modifiability), usability (UX design - looks professional)
+%   - Visual overview! (real-time where people are when meeting) - Uber
+%   - Resource adaptability: Offline db so users still can see data offline (implemented on popular apps)
+% - Read other papers (research)

@@ -7,12 +7,44 @@
 %  - activity recognition vs significant
 %  - No Location - new model for calculations
 % choice of tecnhologies and sensors
+This chapter deals with the design aspect of BikeBus. The BikeBus architecture is briefly explained in form of an overview. Several different architectural structures are explored and explained. Different layers of the architecture is explained and lastly the material design of BikeBus is also explained. 
 
-\section{Application Architecture}
+\subsection{Application Architecture}
+\label{application_architecture}
+
+% Anna: just comment on the interface overview \ref{fig:interface} overall. Something alla "Most of all the components in BikeBus has interfaces... This is a simplified overview of all the interfaces.... " 
 
 
+%Anna: when commenting on this overview combine it with the interface overview. Write something about the interaction between the components there are clean interfaces.... In the domainlayer, Graphical User Interface and Data Layer refere to which package it belongs to...It gives a good understanding for the codebase....
 
-\section{Continuous Sensing Architecture}
+This application is parted into different packages by functionality to keep an overview of the project. It can be seen on figure \ref{fig:packagediagram}, that the packages each stand for a functionality, where there typically will be an interface and a listener to make it easily modifiable.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.45]{Graphics/Images/PackageOverview.png}
+    \caption{Package overview}
+    \label{fig:packagediagram}
+\end{figure}
+
+The "activities" package holds all activity classes which is bound to the views. The "login", "distanceCalculator", "location", "autocomplete", "storage", "compression", "activityRecognition" and "geofence" packages all contains classes which implements API's along with an general interface and listener. When using a Google API the result is returned asynchronously, and should therefore use a listener as a best-practice approach.
+
+The "common" package contains an "AddressService" class, which through the Geocoding API converted an GeoPosition/coordinates to an address and reversed. This class i static to be used across the solution.
+
+The "data" package contains a facade class, where we initially thought of having a facade layer to gather all communication between the view and the model. After an iterative process of experimenting with android and getting further into the development process, this idea was put on hold.
+
+The "domain" package contains all model classes which will be described in detail in \ref{sec:data_layer_design}.
+The "double" package contains a test storage class to mock the data. This is used for implementing the business logic before setting the database up correctly.
+
+\subsection{Interfaces and Listeners}
+\label{sec:interfaces_and_listeners}
+
+As mentioned in the previous package diagram most of the packages contains interfaces and listeners for connecting the API's with the application. This is setup to easily be able to connect with other technologies in the future, without needing to change the application. We have tried to implement other API's for the same functionality using the interface to see if the modifications were easily implemented.
+
+In figure \ref{fig:interfaces} in appendix \ref{app:interfaces} an overview of all interfaces are shown. The typical structure of the listeners are the "onStart", "onSucess" and "onFailed" methods, with customized arguments and return type according to the desired result. The "onStart" method is mostly present to enable spinners in the GUI for better user experience.
+In most interfaces the according listener is passed as an argument for enabling the API calls to return the results asynchronously.
+
+\subsection{Continuous Sensing Architecture}
+\label{sec:continuous_sensing_Architecture}
 
 The continuous sensing in this application is formed from the notions of:
 \begin{itemize}
@@ -21,7 +53,7 @@ The continuous sensing in this application is formed from the notions of:
     \item Activity Recognition
 \end{itemize}
 
-When the user creates or applies to a bikebus two Geofences are created for the start and end destination on the route. When the user is within the one of the Geofences, the Geofence fires an event which either initiates or stops the data collection.
+When the user creates or applies to a bikebus, two Geofences are created for the start and end destination on the route. When the user is within the one of the Geofences, the Geofence fires an event which either initiates or stops the data collection.
 Concretely the application holds a SensorDataController, which controls the flow of sensor data. 
 \begin{enumerate}
     \item Creating two Geofence pending intents from the GoogleGeofence class
@@ -34,7 +66,7 @@ Concretely the application holds a SensorDataController, which controls the flow
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.8]{Graphics/Images/Module_View_SensorData.jpg}
+\includegraphics[scale=0.45]{Graphics/Images/Module_View_SensorData.png}
 \caption{Module view of sensorData package}
 \label{fig:Module_View_Sensor_Data}
 \end{figure}
@@ -46,16 +78,15 @@ In Android there is typically two methods to apply when wanting to create backgr
     \item AsyncTask
 \end{itemize}
 
-The IntentService is a method used for long-term running background processes that is not dependent on the Activity. The AsyncTask is oppositely a method that only exists in the Activity's lifecycle, because it needs to return the value directly to the Activity. Therefore the AsyncTask cannot continue to run outside the application, and is more suited for short-term running background processes which are dependent on the Activity. 
-\footnote{\url{https://github.com/codepath/android_guides/wiki/Starting-Background-Services}}
+The IntentService is a method used for long-term running background processes that is not dependent on the Activity. The AsyncTask is oppositely a method that only exists in the Activity's lifecycle, because it needs to return the value directly to the Activity. Therefore the AsyncTask cannot continue to run outside the application, and is more suited for short-term running background processes which are dependent on the Activity \cite{backgroundServices}. 
 
-\section{Domain layer}
+\subsection{Domain layer}
 
 The domain layer of the application contains three central classes and two enum classes. In figure \ref{fig:domain_layer} below a class diagram have been constructed of those classes. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.5]{Graphics/Images/domain_class_diagram.png}
+    \includegraphics[scale=0.65]{Graphics/Images/domain_class_diagram.png}
     \caption{Class Diagram of Domain Layer}
     \label{fig:domain_layer}
 \end{figure}
@@ -69,14 +100,14 @@ The "Tempo" enum class is used to denote the tempo of a given route. Currently t
 
 The "Position" enum class is currently only used when handling geo-fences in the data collection to determine whether the activated geo-fence is a start or end destiantion.
 
-\section{Graphical User Interface}
+\subsection{Graphical User Interface}
 The graphical design of this application is strongly inspired from another app called "GoMore", which has the concept of coordinating carpools. The "GoMore" concept reminds a lot about the "BikeBus" concept, because both apps coordinates for friends and strangers to ride with each other. The main differences between the two concepts are that "BikeBus" coordinates free bicycle rides and paid "GoMore" coordinates Car rides.
 
 The graphical user interface of the application is developed using the Android API, which connects each view with an activity. In figure \ref{fig:activities} below a diagram shows the connections between each activities, where the dotted line represents the navigation between views using the "startActivity" method, and the other arrows follows UML by showing inheritance and association between the classes.   
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.5]{Graphics/Images/Activity_Diagram.png}
+    \includegraphics[scale=0.45]{Graphics/Images/Activity_Diagram.png}
     \caption{Diagram of activities}
     \label{fig:activities}
 \end{figure}
@@ -89,35 +120,35 @@ Beside from the activity classes, the diagram also contains fragment and adapter
 \label{sec:data_layer_design}
 
 In order to create and search through routes across multiple devices and users, a database must be created to store all route and user information.
-We have chosen to create the database in Firebase, which is a real-time document database hosted by Google. As Firebase is hosted by Google online it is therefore server-less and easy to setup and manage. On the other the application cannot retrieve data offline, and it becomes quite inconvenient to create a manual caching layer. Firebase is a NoSQL database, which means all querying has to be done manually. Firebase only returns a "snapshot" of the data at a given place in the database, and that should be information enough making querying disposable. This simple database structure becomes very scalable and performs very well for retrieval, which typically is the main requirements for real time mobile applications.
+We have chosen to create the database in Firebase, which is a real-time document database hosted by Google. As Firebase is hosted by Google online it is therefore cloudbased. In addition to being cloudbase it is also straightforward to setup and manage. On the other the application cannot retrieve data offline, and it becomes quite inconvenient to create a manual caching layer. Firebase is a NoSQL database, which means all querying has to be done manually. Firebase only returns a "snapshot" of the data at a given place in the database, and that should be information enough making querying disposable. This simple database structure becomes very scalable and performs very well for retrieval, which typically is the main requirements for real time mobile applications.
 
 Firebase stores JSON trees of strings, which can easily be serialized into objects in Java. Best-practices of these JSON trees are to make the tree as flat as possible with references to objects. If the JSON tree is too deep and contains multiple layer of nested objects, the data snapshot retrieved for the application becomes very large and possibly very extravagant. Therefore it is more efficient to store a list of each object type containing meta data and a reference to possibly nested objects to be looked up in another data snapshot.
 
 % Why store google account data when already logging in with google?
 Currently our database looks as the following:
-\begin{figure}[!htb]
+\begin{figure}[H]
     \centering
     \begin{minipage}{.5\textwidth}
         \centering
-        \includegraphics[scale=0.8]{Graphics/Images/firebase_routes.PNG}
+        \includegraphics[scale=0.7]{Graphics/Images/firebase_routes.PNG}
         \caption{Route objects in Firebase}
         \label{fig:firebase_routes}
     \end{minipage}%
     \begin{minipage}{0.5\textwidth}
         \centering
-        \includegraphics[scale=0.8]{Graphics/Images/firebase_users.PNG}
+        \includegraphics[scale=0.7]{Graphics/Images/firebase_users.PNG}
         \caption{User objects in Firebase}
         \label{fig:firebase_users}
     \end{minipage}
 \end{figure}
 
-Each route has a GUID key which can be referenced from other objects. For instance does each route contain a user reference as "ownerId". The "startDest" and "endDest" values could also be created as references to a new GeoPosition object in Firebase to reduce tree depth and avoid redundant data.
+In figure \ref{fig:firebase_routes} and \ref{fig:firebase_users} (higher resolution figures available in \ref{app:firebase_figures}) the tree structure can be seen for the domain classes "Route" and "User". Each route has a UUID key which can be referenced from other objects. For instance does each route contain a user reference as "ownerId". The "startDest" and "endDest" values could also be created as references to a new GeoPosition object in Firebase to reduce tree depth and avoid redundant data.
 Connecting participants to a route is not implemented yet, but it would have been done as a "participant" list of user references for each route to maintain the flat tree structure. Changes in these objects has to be reflected in the domain classes, because the data snapshot automatically serializes the objects to a defined class structure. Therefore the data structure is a trade-off between best-practices of the firebase structure and the domain class structures.
 
 The data retrieval is implemented in the "FirebaseDbHelper" class which implements a defined "IStorage" interface using the listeners "OnGetRoutesListener" and "OnGetUsersListener" due to asynchronous data retrieval. This structure is setup as modular as possible to ensure the database easily can be replaced with different technologies or database types. 
 
-\subsection{Design}
-The "BikeBus" application follows the "Material Design" principles created by Google\footnote{\url{https://material.io/guidelines/#}}, which are quite popular for Android apps. Material Design has great guidelines on how to improve mobile user experience and can quickly make the application look more professional.
+\subsection{Material Design}
+The "BikeBus" application follows the "Material Design" principles created by Google \cite{material}, which are quite popular for Android apps. Material Design has great guidelines on how to improve mobile user experience and can quickly make the application look more professional.
 
 The Android GUI components used to provide the Material Design elements:
 \begin{itemize}
@@ -128,26 +159,22 @@ The Android GUI components used to provide the Material Design elements:
     \item FloatingActionButton - The red create button
 \end{itemize}
 
-In this project Google API's has been frequently used for especially sensor data, but the Google AutoComplete
+In this project Google API's has been frequently used for especially sensor data, but the Google AutoComplete and Google Places API's are purely present for user experience. In figure \ref{fig:sample_figure} three different views of the application can be seen, to illustrate how the mentioned material design elements have been applied. 
 
-\begin{figure}[!htb]
+\begin{figure}[H]
 \centering
 \begin{minipage}{0.32\textwidth}
 \centering
-    \includegraphics[width=\linewidth]{Graphics/Images/bikebus_search.png}
-    \caption{Result page for BikeBus}
-    \label{fig:sample_figure}
+    \includegraphics[width=0.8\linewidth]{Graphics/Images/bikebus_search.png}
 \end{minipage}\hfill
 \begin{minipage}{0.32\textwidth}
 \centering
-    \includegraphics[width=\linewidth]{Graphics/Images/bikebus_detail_1.png}
-    \caption{Detailed page for BikeBus (part 1)}
-    \label{fig:sample_figure}
+    \includegraphics[width=0.8\linewidth]{Graphics/Images/bikebus_detail_1.png}
 \end{minipage}\hfill
 \begin{minipage}{0.32\textwidth}
 \centering
-    \includegraphics[width=\linewidth]{Graphics/Images/bikebus_detail_2.png}
-    \caption{Detailed page for BikeBus (part 2)}
-    \label{fig:sample_figure}
+    \includegraphics[width=0.8\linewidth]{Graphics/Images/bikebus_detail_2.png}
 \end{minipage}
+    \caption{Example Views of BikeBus}
+    \label{fig:sample_figure}
 \end{figure}

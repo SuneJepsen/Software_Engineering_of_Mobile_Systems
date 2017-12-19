@@ -1,4 +1,4 @@
-\documentclass[a4paper]{report}
+\documentclass[a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -73,7 +73,7 @@
 
 
 %Setup of the TableOfContent to incl. subsubsection
-\setcounter{tocdepth}{3}
+\setcounter{tocdepth}{2}
 \setcounter{secnumdepth}{3}
 
 \RestyleAlgo{boxruled}
@@ -197,73 +197,82 @@ Mikkel Baun \textsc{Kjærgaard} % Supervisor's Name
 
 \tableofcontents
 
+\clearpage
+
 
 %***************************************************************
 %               Part 1: Introduction
 %***************************************************************
-\chapter{Introduction}
+\section{Introduction}
     \input{020_introduction.tex}
     
     \input{030_Motivation.tex}
     
     \input{040_Objectives.tex}
     
-    \input{041_Limitations.tex}
+    %\input{041_Limitations.tex}
     
     \input{043_Overview.tex}
 
 %***************************************************************
 %               Part 1: Mobile sensing
 %***************************************************************
-\chapter{Mobile Sensing} 
+\section{Mobile Sensing} 
     \input{100_Mobile_Sensing.tex}
     
-\chapter{Sensor Challenges}
+\section{Sensor Challenges}
     \input{200_Sensor_Challenges.tex}
         
 %***************************************************************
 %               Part 2: Architecture
 %***************************************************************
 
-\chapter{Architecture Qualities}
+\section{Architecture Qualities}
     \input{300_Architectural_Qualities.tex}
     
 
 
-\chapter{Solution Approach}
+\section{Solution Approach}
     \input{400_Solution_Approach.tex}
 
-\chapter{Solution Description}
+\section{Solution Description}
     \input{501_Solution_Description.tex}
 %***************************************************************
 %               Part 8: Related work
 %***************************************************************
-\chapter{Related Work}
-    \input{600_Related_Work.tex}
+% \chapter{Related Work}
+%     \input{600_Related_Work.tex}
 %***************************************************************
 %               Part 9: Reflection 
 %***************************************************************
-\chapter{Reflection and Discussion}
+\section{Reflection and Discussion}
     \input{700_Reflection.tex}
 %***************************************************************
 %               Part 9: Conclusion
 %***************************************************************
-\chapter{Conclusion}
+
+\section{Conclusion}
     \input{800_Conclusion.tex}
 
 %***************************************************************
 %               Bibliography
 %***************************************************************
-\addcontentsline{toc}{chapter}{\\BIBLIOGRAPHY}
+\clearpage
+
+%\addcontentsline{toc}{section}{\\BIBLIOGRAPHY}
+\section{References}
 \input{900_Bibliography.tex}
 
 \clearpage
 %***************************************************************
 %               Appendex
 %***************************************************************
-\appendix
-\addcontentsline{toc}{chapter}{\\APPENDICES}
-\chapter{Proofs}
-\input{950_Appendex.tex}
+\section{Appendix}
+\label{app:appendix}
+%\appendix
+    \input{950_Appendex.tex}
+%\addcontentsline{toc}{section}{\\APPENDICES}
+%\section*{Figures}
+
 
 \end{document}

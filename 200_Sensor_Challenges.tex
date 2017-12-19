@@ -2,9 +2,9 @@
 
 %TODO:
 % Introduction to data collection, data processing and closing the sensing loop
+This chapter gets into several challenges accompanied with mobile sensing. Data collecting and processing is touched upon and furthermore closing the sensing loop is explained and related to how BikeBus handles closing the sensing loop and what other options there are. 
 
-
-\section{Data Collection}
+\subsection{Data Collection}
 \label{sec:data_collection}
 % TODO: 
 % Apply definitions
@@ -27,16 +27,16 @@ The data collection from continuous sensing in our application consists of:
     \item Activity Recognition data from Google API - Low-power Sensors \cite{androidActivity}
 \end{itemize}
 
-Location data uses the fine location sensor to determine the actual path of the bike route when a bikebus has startet. To determine when a bikebus has startet and ended the notion of "Geofencing" is used to trigger when the user is inside a radius of \textcolor{red}{<<INSERT RADIUS>>}. 
+Location data uses the fine location sensor to determine the actual path of the bike route when a bikebus has started. To determine when a bikebus has started and ended the notion of "Geofencing" is used to trigger when the user is inside a radius of 100 meter. 
 When a geofence event has been raised some constraints must be fulfilled before the continuous data collection can begin.
 \begin{itemize}
-    \item The current timestamp must be within the time window textcolor{red}{<<INSERT TIME WINDOW>>} of an enlisted bikebus
+    \item The current time stamp must be within the time window 10 minutes of an enlisted bikebus
     \item The current activity must be of type "ON\_BICYCLE"
 \end{itemize}
-Once the constraints have been fulfilled the data collection begins \textcolor{red}{<<INSERT SENSING TACTIC>>} by collecting locations at the sample rate of \textcolor{red}{<<INSERT SAMPLE RATE>>}. This is fairly expensive sensor collection because the fine location sensor is used to give street-specific accuracy of the location data. This expensive sensing operation can be improved by decreasing the sample rate (\textcolor{red}{<<SPECIFY EXACTLY WHICH TACTICS THIS IS>>}) and afterwards apply data processing techniques to smooth out the path (section~\ref{sec:data_processing}).
+Once the constraints have been fulfilled the data collection would begin by collecting locations at the sample rate of 3 seconds. This is fairly expensive sensor collection because the fine location sensor is used to give street-specific accuracy of the location data. This expensive sensing operation can be improved by using a sensor replacement tactic (section~\ref{subsec:energy_efficiency}) and afterwards apply data processing techniques to smooth out the path (section~\ref{sec:data_processing}).
 
-Along with the location data the data collection also includes Activity Recognition for assuring all collected data only is collected while biking. This eliminates the situations where stopping for a red light is accounted for in the data collection and therefore will influence the overall statistics. This combination of location and activity data will provide more accurate biking statistics. 
-The activity recognition only uses the sensors defined as "Low-power".
+The sensor replacement tactic uses Activity Recognition to ensure all location data only is collected while biking. This eliminates the situations where stopping for a red light is accounted for in the data collection and therefore will influence the overall statistics. This combination of location and activity data will provide more accurate biking statistics. 
+The activity recognition uses a "Low-power" sensor "Significant motion" to avoid sampling and processing when there is no significant movement. Whenever there is a significant motion it starts to determine the activity.
 According to the Android documentation of "Low-power sensors" \cite{androidLow} the following sensors can be utilized:
 \begin{itemize}
     \item Geomagnetic rotation vector
@@ -47,15 +47,15 @@ According to the Android documentation of "Low-power sensors" \cite{androidLow} 
 \end{itemize}
 The use of only "Low-power sensors" makes the activity recognition relatively energy efficient opposed to the location data.
 
-Once the end geofence event arises the data collection can stop and the final statistics will be processed. Due to the incident of the end geofence never being triggered due to inaccurate location sensing, the program automatically stops the data collection if the current time exceeds a given time threshold \textcolor{red}{<<INSERT TIME THRESHOLD>>} defined from the suggested time duration of the current bikebus.
+Once the end geofence event arises the data collection can stop and the final statistics will be processed. Due to the incident of the end geofence never being triggered due to inaccurate location sensing, the program automatically stops the data collection if the current time exceeds a given time threshold from the suggested time duration of the current bikebus.
 
-\section{Data Processing}
+\subsection{Data Processing}
 \label{sec:data_processing}
 % TODO:
 % Apply definitions
 % Little introduction
 % Explain Types of processing
-%    - online/offline processing
+%    - on-line/off-line processing
 %    - realtime/batch processing
 % Explain processing math
 %    - classification (basic)
@@ -65,7 +65,7 @@ Once the end geofence event arises the data collection can stop and the final st
 % Relate to app
 % Reflect and discuss
 
-When working with location based data one needs to take into account the amount of data which need to be processed and stored. Figure \ref{fig:system_model_for_locations_based_services} from \cite{Lee2011} shows how moving objects gathers data and sends it to mobile object databases. The location server will then be able to serve different kinds of locations based application. The leads to how Bikebus can be designed only to store the most valuable data without losing precision of data. Bikebus has cases were it could be beneficial to visualize route data or do statistical calculation on the route data.   
+When working with location based data one needs to take into account the amount of data which need to be processed and stored. Figure \ref{fig:system_model_for_locations_based_services} from \cite{Lee2011} shows how moving objects gathers data and sends it to mobile object databases. The location server will then be able to serve different kinds of locations based application. The leads to how BikeBus can be designed only to store the most valuable data without losing precision of data. BikeBus has cases were it could be beneficial to visualize route data or do statistical calculation on the route data.   
 
 \begin{figure}[H]
 \centering
@@ -76,14 +76,14 @@ When working with location based data one needs to take into account the amount 
 \end{figure}
 
 
-There are several options presented by \cite{Lee2011} how one can do data reduction and filtering techniques on spatial trajectories and thereby reduce the amount of data saved. There is batch compression (offline) and online algorithms for data reduction. Batch compression do computation on a full set of location points and then transmits it to the location server. Online algorithms computes directly on online selective data. We have created prototypes  of an offline and online algorithm namely Douglas-Peucker (DP) and Sliding Window. The implementations are elaborated in section~\ref{sec:prototypes}. 
+There are several options presented by \cite{Lee2011} how one can do data reduction and filtering techniques on spatial trajectories and thereby reduce the amount of data saved. There is batch compression (off-line) and on-line algorithms for data reduction. Batch compression do computation on a full set of location points and then transmits it to the location server. On-line algorithms computes directly on on-line selective data. We have created prototypes  of an off-line and on-line algorithm namely Douglas-Peucker (DP) and Sliding Window. The implementations are elaborated in section \ref{sec:compression}. 
 
 Figure \ref{fig:douglas_peucker_algorithm} illustrates how DP using perpendicular Euclidian distance as the error measure together with a approximated trajectory (dotted line) and the original trajectory. If the error measure doesn't meet the threshold ($p_9$) a split point is created at ($p_9$). This results in a trajectory $p_0,p_9,p_{16}$. This process is repeated until the error measure between the approximated trajectory and the original trajectory is below the error threshold. The algorithm proceeds until all the location points in the original trajectory are visited.   
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.6]{DP.JPG}
-\caption{Douglas-Peucker offline algorithm}
+\caption{Douglas-Peucker off-line algorithm}
 \label{fig:douglas_peucker_algorithm}
 \end{figure}
 
@@ -93,7 +93,7 @@ The idea behind sliding window is to fit locations points in a growing sliding w
 \centering
 \includegraphics[scale=0.6]{SlidingWindow.JPG}
 
-\caption{Sliding window online algorithm}
+\caption{Sliding window on-line algorithm}
 \label{fig:sliding_window_algorithm}
 \end{figure}
 
@@ -104,7 +104,7 @@ An alternative to the sliding window is the open window algorithm. It is similar
 \centering
 \includegraphics[scale=0.6]{OpenWindow.JPG}
 
-\caption{Open window online algorithm}
+\caption{Open window on-line algorithm}
 \label{fig:open_window_algorithm}
 \end{figure}
 
@@ -120,7 +120,8 @@ Suggestions for further processing:
 \end{itemize}
 \fi
 
-\section{Closing the Sensing Loop}
+\subsection{Closing the Sensing Loop}
+\label{section:Closing_the_sensing_loop}
 % TODO:
 % Apply definitions
 % Little introduction
@@ -143,7 +144,7 @@ When expanding the data sharing to the community the issue of privacy needs to b
 
 Ideas for applying privacy:
 \begin{itemize}
-    \item Share only the location and timestamp data and let the server assign the data a auto-generated primary key for the database. This makes all data independent from each other and the user.
+    \item Share only the location and time stamp data and let the server assign the data a auto-generated primary key for the database. This makes all data independent from each other and the user.
     \item Share the data as batch file once a day to minimize live monitoring each user. Even though the location data is not connected to a specific person, it can be invasive to know that a person is at a specific place at the given moment.
 \end{itemize}
 
